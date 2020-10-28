@@ -1,4 +1,4 @@
-package com.kunal.vqms
+package com.kunal.vqms.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -10,6 +10,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.kunal.vqms.R
 
 
 class LoginActivity : AppCompatActivity() {
@@ -49,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) {
-                startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 finish()
             } else {
                 if(response==null)

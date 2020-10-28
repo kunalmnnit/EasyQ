@@ -5,11 +5,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.kunal.vqms.GovernmentOfficesActivity
 import com.kunal.vqms.Interface.ItemClickListener
+import com.kunal.vqms.ui.MapsActivity
 import com.kunal.vqms.R
 import com.kunal.vqms.model.Item
 
@@ -29,11 +28,16 @@ class ItemListAdapter(private val itemList:List<Item>, private val context: Cont
         holder.setItemClickListener(object : ItemClickListener{
             override fun onClick(view: View, position: Int) {
                 when (position) {
-                    0 -> startActivity(context,Intent(context,GovernmentOfficesActivity::class.java),null)
-                    1 -> startActivity(context,Intent(context,GovernmentOfficesActivity::class.java),null)
+                    0 -> startActivity(context,Intent(context, MapsActivity::class.java).putExtra("map",
+                        0
+                    ),null)
+                    1 -> startActivity(context,Intent(context, MapsActivity::class.java).putExtra("map",
+                       1
+                    ),null)
                 }
             }
 
         })
     }
+
 }

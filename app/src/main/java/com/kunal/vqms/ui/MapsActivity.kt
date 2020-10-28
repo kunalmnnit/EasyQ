@@ -1,32 +1,37 @@
-package com.kunal.vqms
+package com.kunal.vqms.ui
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.kunal.vqms.R
+import com.kunal.vqms.constants.Constants
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.annotations.MarkerOptions
+import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
 import com.mapbox.mapboxsdk.location.LocationComponentOptions
 import com.mapbox.mapboxsdk.location.modes.CameraMode
 import com.mapbox.mapboxsdk.location.modes.RenderMode
-import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
-import kotlinx.android.synthetic.main.activity_government_offices.*
+import kotlinx.android.synthetic.main.activity_maps.*
 
-class GovernmentOfficesActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener {
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
+    private var whichMap:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
-        setContentView(R.layout.activity_government_offices)
+        setContentView(R.layout.activity_maps)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
+        whichMap = intent.getIntExtra("map",0)
     }
     override fun onStart() {
         super.onStart()
@@ -66,6 +71,21 @@ class GovernmentOfficesActivity : AppCompatActivity(), OnMapReadyCallback, Permi
             )
         ) {
             enableLocationComponent(it)
+            if(whichMap== 0) {
+                Constants.governmentOffices.forEach {
+                    mapboxMap.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(it.first, it.second))
+                    )
+                }
+            } else {
+                Constants.rationShops.forEach {
+                    mapboxMap.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(it.first, it.second))
+                    )
+                }
+            }
         }
     }
         @SuppressLint("MissingPermission")

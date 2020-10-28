@@ -1,9 +1,11 @@
-package com.kunal.vqms
+package com.kunal.vqms.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alan.alansdk.AlanConfig
+import com.kunal.vqms.R
 import com.kunal.vqms.adapter.ItemListAdapter
 import com.kunal.vqms.model.Item
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         )
         adapter = ItemListAdapter(itemList,baseContext)
         item_list_view.adapter = adapter
+        val key = "d68ce1a947377a1b1cd3f86d54b7142e2e956eca572e1d8b807a3e2338fdd0dc/stage"
+        val config = AlanConfig.builder()
+            .setProjectId(key)
+            .build()
+
+        alan_button.initWithConfig(config)
     }
     override fun onBackPressed() {
         super.onBackPressed()
