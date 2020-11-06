@@ -22,7 +22,7 @@ class ItemListAdapter(private val itemList:List<Item>, private val context: Cont
         return itemList.size
     }
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
-        val item = itemList.get(position)
+        val item = itemList[position]
         holder.item_image.setImageResource(item.url)
         holder.item_title.text = item.title
         holder.setItemClickListener(object : ItemClickListener{

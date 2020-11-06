@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
         providers = listOf(
             AuthUI.IdpConfig.GoogleBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build()
+
         )
         auth = Firebase.auth
         if(auth!!.currentUser!=null) {

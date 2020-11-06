@@ -16,11 +16,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
+        toolbar.setTitle(R.string.app_name)
         item_list_view.layoutManager = LinearLayoutManager(this)
         item_list_view.setHasFixedSize(true)
         item_list_view.layoutManager = LinearLayoutManager(this)
-        val itemList = listOf(Item(R.mipmap.ic_launcher,"Government Offices"),
-            Item(R.mipmap.ic_launcher,"Ration Shops")
+        val itemList = listOf(Item(R.drawable.government_offices,"Government Offices"),
+            Item(R.drawable.ration_shops,"Ration Shops")
         )
         adapter = ItemListAdapter(itemList,baseContext)
         item_list_view.adapter = adapter

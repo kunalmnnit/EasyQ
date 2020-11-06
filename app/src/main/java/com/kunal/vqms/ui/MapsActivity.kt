@@ -1,6 +1,7 @@
 package com.kunal.vqms.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -65,6 +66,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
 
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
+        mapboxMap.setOnMarkerClickListener {
+            startActivity(Intent(this@MapsActivity,BookAppointment::class.java).putExtra("place",it.title))
+            false
+        }
         mapboxMap.setStyle(
             Style.Builder().fromUri(
                 "mapbox://styles/mapbox/cjerxnqt3cgvp2rmyuxbeqme7"
@@ -75,14 +80,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
                 Constants.governmentOffices.forEach {
                     mapboxMap.addMarker(
                         MarkerOptions()
-                            .position(LatLng(it.first, it.second))
+                            .position(LatLng(it.second.first, it.second.second))
+                            .setTitle(this.getString(it.first))
                     )
                 }
             } else {
                 Constants.rationShops.forEach {
                     mapboxMap.addMarker(
                         MarkerOptions()
-                            .position(LatLng(it.first, it.second))
+                            .position(LatLng(it.second.first, it.second.second))
                     )
                 }
             }
@@ -118,7 +124,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
 
     override fun onExplanationNeeded(permissionsToExplain: MutableList<String>?) {
         Toast.makeText(this, R.string.user_location_permission_explanation, Toast.LENGTH_LONG).show()
-
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -131,5 +136,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
             finish()
         }
     }
-
 }
