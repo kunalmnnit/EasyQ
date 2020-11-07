@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">" इजी क्यू "</string>
+    <string name="signOut">प्रस्थान करें</string>
+    <string name="item1">सरकारी कार्यालय</string>
+    <string name="item2">राशन की दुकानें</string>
+    <string name="user_location_permission_not_granted">उपयोगकर्ता स्थान की अनुमति नहीं दी गई है</string>
+    <string name="user_location_permission_explanation">व्याख्या</string>
+    <string name="office1">राजस्थानी राज्य सरकारी विभाग</string>
+    <string name="office2">सहायक आयुक्त का कार्यालय</string>
+    <string name="office3">जेवीवीएनएल कार्यालय</string>
+    <string name="office4">छपर हाउस</string>
+    <string name="office5">ईमित्र कार्यालय</string>
+    <string name="office6">स्थानीय स्वशासन विभाग</string>
+    <string name="office7">कलेक्ट्रेट</string>
+    <string name="shop1">गवर्नमेंट राशन शॉप,झोटवाड़ा</string>
+    <string name="shop2">गवर्नमेंट राशन शॉप,बनीपार्क</string>
+    <string name="shop3">सरकारी राशन की दुकान, वैशाली नगर</string>
+    <string name="shop4">सरकारी राशन की दुकान, निवारू</string>
+    <string name="place">स्थान</string>
+    <string name="book_slot">बुक स्लॉट</string>
+    <string name="date">तारीख चुनें</string>
+    <string name="time">समय उठाओ</string>
+    <string name="book">"आरोपित करेें "</string>
+    <string name="change_language">भाषा बदलें</string>
+</resources>
