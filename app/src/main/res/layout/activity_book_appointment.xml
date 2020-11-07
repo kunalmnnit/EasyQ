@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:padding="10dp"
             android:layout_marginTop="20dp">
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/date"
@@ -64,6 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:padding="10dp"
                 android:layout_marginTop="20dp">
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/time"
@@ -83,12 +85,12 @@
                     app:iconGravity="textEnd"
                     />
             </LinearLayout>
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/book"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"/>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

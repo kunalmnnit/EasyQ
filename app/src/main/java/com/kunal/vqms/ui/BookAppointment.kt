@@ -28,14 +28,14 @@ class BookAppointment : AppCompatActivity(){
             .setCalendarConstraints(CalendarConstraints.Builder().setStart(today).build())
             .build()
         datePicker.addOnPositiveButtonClickListener{
-            date.text = it.toString()
+            date.text = datePicker.headerText
         }
         val timePicker = MaterialTimePicker.Builder()
                                         .setTitleText("Select a Time")
                                         .setTimeFormat(TimeFormat.CLOCK_12H)
                                         .build()
          timePicker.addOnPositiveButtonClickListener {
-
+             time.text = "${timePicker.hour}:${timePicker.minute}"
          }
         date_picker.setOnClickListener {
                 datePicker.show(supportFragmentManager,"DATE_PICKER")
