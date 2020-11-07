@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         item_list_view.setHasFixedSize(true)
         item_list_view.layoutManager = LinearLayoutManager(this)
         val itemList = listOf(Item(R.drawable.ration_shops,getString(R.string.item2)),
-            //Item(R.drawable.ration_shops,getString(R.string.item1))
         )
         adapter = ItemListAdapter(itemList,baseContext)
         item_list_view.adapter = adapter

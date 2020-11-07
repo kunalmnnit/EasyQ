@@ -32,7 +32,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
         setContentView(R.layout.activity_maps)
         mapView?.onCreate(savedInstanceState)
         mapView?.getMapAsync(this)
-       // whichMap = intent.getIntExtra("map",0)
     }
     override fun onStart() {
         super.onStart()
@@ -76,15 +75,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
             )
         ) {
             enableLocationComponent(it)
-//            if(whichMap== 0) {
-//                Constants.governmentOffices.forEach {
-//                    mapboxMap.addMarker(
-//                        MarkerOptions()
-//                            .position(LatLng(it.second.first, it.second.second))
-//                            .setTitle(this.getString(it.first))
-//                    )
-//                }
-//            } else {
+
                 Constants.rationShops.forEach {
                     mapboxMap.addMarker(
                         MarkerOptions()
@@ -92,7 +83,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
                             .setTitle(this.getString(it.first))
                     )
                 }
-            //}
         }
     }
         @SuppressLint("MissingPermission")
