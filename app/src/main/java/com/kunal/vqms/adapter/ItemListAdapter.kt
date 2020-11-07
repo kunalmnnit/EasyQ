@@ -27,14 +27,8 @@ class ItemListAdapter(private val itemList:List<Item>, private val context: Cont
         holder.item_title.text = item.title
         holder.setItemClickListener(object : ItemClickListener{
             override fun onClick(view: View, position: Int) {
-                when (position) {
-                    0 -> startActivity(context,Intent(context, MapsActivity::class.java).putExtra("map",
-                        0
-                    ),null)
-                    1 -> startActivity(context,Intent(context, MapsActivity::class.java).putExtra("map",
-                       1
-                    ),null)
-                }
+                    startActivity(context,Intent(context, MapsActivity::class.java),null)
+
             }
 
         })
