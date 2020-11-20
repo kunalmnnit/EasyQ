@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunal.vqms.Interface.ItemClickListener
 import kotlinx.android.synthetic.main.item.view.*
 
+/* @author kunal on 16/10/2020 */
+/* View Holder for UI of Ration Shop Recylcer View Adpter */
+
 class ItemListViewHolder(itemVew:View) : RecyclerView.ViewHolder(itemVew),View.OnClickListener {
     private lateinit var itemClickListener: ItemClickListener
 

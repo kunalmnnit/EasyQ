@@ -11,7 +11,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kunal.vqms.R
+import io.paperdb.Paper
 
+/* @author Kunal on 16/10/2020 */
+/* Authentication Activity */
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var providers:List<AuthUI.IdpConfig>
@@ -21,10 +24,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        Paper.init(this)
+        val language:String? = Paper.book().read("language")
+        if(language==null)
+            Paper.book().write("language","en")
         providers = listOf(
-            AuthUI.IdpConfig.GoogleBuilder().build(),
             AuthUI.IdpConfig.PhoneBuilder().build()
-
         )
         auth = Firebase.auth
         if(auth!!.currentUser!=null) {
@@ -51,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
             val response = IdpResponse.fromResultIntent(data)
 
             if (resultCode == Activity.RESULT_OK) {
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                startActivity(Intent(this@LoginActivity, UserProfileActivity::class.java))
                 finish()
             } else {
                 if(response==null)

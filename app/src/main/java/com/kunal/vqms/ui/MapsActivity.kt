@@ -3,9 +3,13 @@ package com.kunal.vqms.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kunal.vqms.R
 import com.kunal.vqms.constants.Constants
 import com.mapbox.android.core.permissions.PermissionsListener
@@ -22,16 +26,26 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback
 import com.mapbox.mapboxsdk.maps.Style
 import kotlinx.android.synthetic.main.activity_maps.*
 
+/* @author Anshul on 21/10/2020 */
+/* Maps Activity for nearby Ration Shops */
+
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListener {
     private var permissionsManager: PermissionsManager = PermissionsManager(this)
     private lateinit var mapboxMap: MapboxMap
-    private var whichMap:Int=0
+    private val rationShops:MutableList<Pair<String,GeoPoint>>? = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
-        setContentView(R.layout.activity_maps)
-        mapView?.onCreate(savedInstanceState)
-        mapView?.getMapAsync(this)
+        val db = Firebase.firestore
+        db.collection("shops").get().addOnSuccessListener {shopList -> shopList.documents.iterator().forEach {shop->
+                rationShops?.add(Pair(shop.id,shop.get("location") as GeoPoint))
+            }
+        }.addOnCompleteListener {
+            Mapbox.getInstance(this, getString(R.string.mapbox_access_token))
+            setContentView(R.layout.activity_maps)
+            mapView?.onCreate(savedInstanceState)
+            mapView?.getMapAsync(this)
+        }
+
     }
     override fun onStart() {
         super.onStart()
@@ -66,7 +80,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
     override fun onMapReady(mapboxMap: MapboxMap) {
         this.mapboxMap = mapboxMap
         mapboxMap.setOnMarkerClickListener {
-            startActivity(Intent(this@MapsActivity,BookAppointment::class.java).putExtra("place",it.title))
+            startActivity(Intent(this@MapsActivity,BookAppointment::class.java).putExtra("place",it.snippet))
             false
         }
         mapboxMap.setStyle(
@@ -75,12 +89,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, PermissionsListene
             )
         ) {
             enableLocationComponent(it)
-
-                Constants.rationShops.forEach {
+                rationShops?.forEach {point ->
                     mapboxMap.addMarker(
                         MarkerOptions()
-                            .position(LatLng(it.second.first, it.second.second))
-                            .setTitle(this.getString(it.first))
+                            .position(LatLng(point.second.latitude, point.second.longitude))
+                            .setSnippet(point.first)
                     )
                 }
         }

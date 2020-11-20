@@ -2,6 +2,8 @@ package com.kunal.vqms.constants
 
 import com.kunal.vqms.R
 
+/* @author Anshul on 21/10/2020 */
+/* Constanst used in the application */
 class Constants {
      companion object{
         val governmentOffices : List<Pair<Int,Pair<Double,Double>>> = listOf(Pair(R.string.office1,Pair(26.85082,75.81911)),

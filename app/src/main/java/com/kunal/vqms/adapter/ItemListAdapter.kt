@@ -12,10 +12,13 @@ import com.kunal.vqms.ui.MapsActivity
 import com.kunal.vqms.R
 import com.kunal.vqms.model.Item
 
+/* @author kunal on 16/10/2020 */
+/* Adapter for Ration Shop Recylcer View */
+
 class ItemListAdapter(private val itemList:List<Item>, private val context: Context) : RecyclerView.Adapter<ItemListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemView = inflater.inflate(R.layout.item,parent,false)
+        val itemView = inflater.inflate(R.layout.shop,parent,false)
         return ItemListViewHolder(itemView)
     }
     override fun getItemCount(): Int {
@@ -28,9 +31,7 @@ class ItemListAdapter(private val itemList:List<Item>, private val context: Cont
         holder.setItemClickListener(object : ItemClickListener{
             override fun onClick(view: View, position: Int) {
                     startActivity(context,Intent(context, MapsActivity::class.java),null)
-
             }
-
         })
     }
 

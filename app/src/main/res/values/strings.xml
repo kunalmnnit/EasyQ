@@ -23,4 +23,7 @@
     <string name="time">pick time</string>
     <string name="book">Book</string>
     <string name="change_language">change language</string>
+    <string name="openNavDrawer" translatable="false">Navigation Drawer Open</string>
+    <string name="closeNavDrawer" translatable="false">Navigation Drawer Close</string>
+    <string name="avatar" translatable="false">Avatar</string>
 </resources>
