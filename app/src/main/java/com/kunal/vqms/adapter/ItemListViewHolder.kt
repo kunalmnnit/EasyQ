@@ -3,7 +3,7 @@ package com.kunal.vqms.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.kunal.vqms.Interface.ItemClickListener
-import kotlinx.android.synthetic.main.item.view.*
+import kotlinx.android.synthetic.main.shop.view.*
 
 /* @author kunal on 16/10/2020 */
 /* View Holder for UI of Ration Shop Recylcer View Adpter */

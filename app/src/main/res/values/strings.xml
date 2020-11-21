@@ -26,4 +26,7 @@
     <string name="openNavDrawer" translatable="false">Navigation Drawer Open</string>
     <string name="closeNavDrawer" translatable="false">Navigation Drawer Close</string>
     <string name="avatar" translatable="false">Avatar</string>
+    <string name="upload_your_bpl_card">Upload your BPL Card:</string>
+    <string name="update">Update</string>
+    <string name="name">Name</string>
 </resources>
