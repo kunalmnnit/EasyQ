@@ -4,13 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alan.alansdk.AlanCallback
 import com.alan.alansdk.AlanConfig
+import com.alan.alansdk.AlanState
+import com.alan.alansdk.events.EventCommand
 import com.google.android.material.navigation.NavigationView
 import com.kunal.vqms.R
 import com.kunal.vqms.adapter.ItemListAdapter
@@ -36,6 +40,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .setProjectId(key)
             .build()
         alan_button.initWithConfig(config)
+        alan_button.registerCallback(object : AlanCallback() {
+            override fun onCommandReceived(eventCommand: EventCommand?) {
+                super.onCommandReceived(eventCommand)
+                eventCommand?.data?.let {
+
+                        startActivity(Intent(this@MainActivity,BookAppointment::class.java).putExtra("place",
+                            "CsHBeN40fSYvZFCKlvivOZo8ocp2"))
+                }
+            }
+        })
         updateView(Paper.book().read<String>("language"))
 
     }
