@@ -16,16 +16,10 @@
             android:background="@color/white">
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <com.google.android.material.progressindicator.ProgressIndicator
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         >
     <LinearLayout
         android:layout_width="match_parent"

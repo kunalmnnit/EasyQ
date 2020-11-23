@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
 import com.kunal.vqms.R
 import kotlinx.android.synthetic.main.activity_user_profile.*
@@ -54,7 +55,7 @@ class UserProfileActivity : AppCompatActivity() {
         startActivityForResult(cameraIntent,MY_CAMERA_PERMISSION_CODE)
     }
     private fun saveProfile() {
-        progress_bar.show()
+
         val storage = Firebase.storage
         val auth = Firebase.auth
         val db = Firebase.firestore
@@ -74,16 +75,16 @@ class UserProfileActivity : AppCompatActivity() {
             snapshot.storage.downloadUrl.addOnSuccessListener {uri->
                 user["url"]=uri.toString()
                 db.collection("users").document(uid).set(user).addOnSuccessListener {
-                    progress_bar.hide()
+
                     startActivity(Intent(this@UserProfileActivity,MainActivity::class.java))
                     finish()
                 }.addOnFailureListener{
-                    progress_bar.hide()
+
                     Toast.makeText(this,"Failed to create your profile!",Toast.LENGTH_SHORT).show()
                 }
             }
         }.addOnFailureListener{
-            progress_bar.hide()
+
             Toast.makeText(this,"Failed uploading your BPL Card!",Toast.LENGTH_SHORT).show()
         }
     }

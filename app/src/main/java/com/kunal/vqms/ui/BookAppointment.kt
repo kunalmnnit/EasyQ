@@ -3,16 +3,28 @@ package com.kunal.vqms.ui
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.Header
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.gson.JsonObject
 import com.kunal.vqms.R
 import kotlinx.android.synthetic.main.activity_book_appointment.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -21,9 +33,14 @@ import kotlin.collections.HashMap
 
 class BookAppointment : AppCompatActivity(){
     private lateinit var shopID:String
+    private lateinit var mRequestQueue:RequestQueue
+    private lateinit var auth:FirebaseAuth
+    private val url = "https://fcm.googleapis.com/fcm/send"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_appointment)
+        mRequestQueue = Volley.newRequestQueue(this)
+        auth=Firebase.auth
         shopID = intent.getStringExtra("place").toString()
         getShopName()
         setSupportActionBar(toolbar)
@@ -61,21 +78,49 @@ class BookAppointment : AppCompatActivity(){
         }
         book.setOnClickListener {
             bookSlot(datePicker.selection!!,hour,min)
+            sendNotification()
         }
     }
+    private fun sendNotification() {
+
+        try {
+            val mainObj = JSONObject()
+            val uid = auth.currentUser!!.uid
+            mainObj.put("to","/topics/$uid")
+            val notification = JSONObject()
+            notification.put("title","Booking confirmed")
+            notification.put("body","Your slot has been booked")
+            mainObj.put("notification",notification)
+            val request = object: JsonObjectRequest(Method.POST,url,mainObj,Response.Listener{response:JSONObject ->
+                Log.d("notification",response.toString())
+            },Response.ErrorListener {error ->
+                    Log.d("notification",error.toString())
+            }) {
+                override fun getHeaders(): MutableMap<String, String> {
+                    val headers:MutableMap<String, String> = HashMap()
+                    headers.put("content-type","application/json")
+                    headers.put("authorization","key=AAAA_TqgOEs:APA91bGYkjSuPrKo3XXkMHV39LSo9JqIRuc61vkTua2vbjRFZcU-F8zEhVbg7lrdk9HFQXKULHbDl4mda0oUee_rcemiDPvMIQtSq6ze2BCRMR5bXL89q9McVgAOEWAYFLVRIHI2jEtf")
+                    return headers
+                }
+            }
+            mRequestQueue.add(request)
+        } catch (e:JSONException) {
+            e.printStackTrace()
+        }
+    }
+
     private fun getShopName(){
         val db = Firebase.firestore
         var shopName:String?=null
         db.collection("shops").document(shopID).get().addOnSuccessListener {shop ->
             shopName = shop.get("name") as String
-            place.setText(shopName)
+            place.text = shopName
         }
     }
 
     private fun bookSlot(timestamp:Long,hour:Int,min:Int) {
 
         val db = Firebase.firestore
-        val auth = Firebase.auth
         val uid = auth.currentUser!!.uid
         val booking:MutableMap<String,Any> = HashMap()
         booking["user"] = uid

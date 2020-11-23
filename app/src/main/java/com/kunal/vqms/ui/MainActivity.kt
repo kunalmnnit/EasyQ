@@ -16,6 +16,9 @@ import com.alan.alansdk.AlanConfig
 import com.alan.alansdk.AlanState
 import com.alan.alansdk.events.EventCommand
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kunal.vqms.R
 import com.kunal.vqms.adapter.ItemListAdapter
 import com.kunal.vqms.model.Item
@@ -44,14 +47,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onCommandReceived(eventCommand: EventCommand?) {
                 super.onCommandReceived(eventCommand)
                 eventCommand?.data?.let {
-
                         startActivity(Intent(this@MainActivity,BookAppointment::class.java).putExtra("place",
                             "CsHBeN40fSYvZFCKlvivOZo8ocp2"))
                 }
             }
         })
+       val uid = Firebase.auth.currentUser!!.uid
+        FirebaseMessaging.getInstance().subscribeToTopic(uid)
         updateView(Paper.book().read<String>("language"))
-
     }
 
     private fun updateView(language: String?) {
